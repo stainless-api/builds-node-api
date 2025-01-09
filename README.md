@@ -30,7 +30,7 @@ const client = new Stainless({
 });
 
 async function main() {
-  const output = await client.builds.outputs.retrieve('REPLACE_ME', 'REPLACE_ME');
+  const output = await client.builds.outputs.retrieve('bui_123', 'node');
 
   console.log(output.commit);
 }
@@ -52,8 +52,8 @@ const client = new Stainless({
 
 async function main() {
   const output: Stainless.Builds.OutputRetrieveResponse = await client.builds.outputs.retrieve(
-    'REPLACE_ME',
-    'REPLACE_ME',
+    'bui_123',
+    'node',
   );
 }
 
@@ -71,7 +71,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const output = await client.builds.outputs.retrieve('REPLACE_ME', 'REPLACE_ME').catch(async (err) => {
+  const output = await client.builds.outputs.retrieve('bui_123', 'node').catch(async (err) => {
     if (err instanceof Stainless.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
@@ -114,7 +114,7 @@ const client = new Stainless({
 });
 
 // Or, configure per-request:
-await client.builds.outputs.retrieve('REPLACE_ME', 'REPLACE_ME', {
+await client.builds.outputs.retrieve('bui_123', 'node', {
   maxRetries: 5,
 });
 ```
@@ -131,7 +131,7 @@ const client = new Stainless({
 });
 
 // Override per-request:
-await client.builds.outputs.retrieve('REPLACE_ME', 'REPLACE_ME', {
+await client.builds.outputs.retrieve('bui_123', 'node', {
   timeout: 5 * 1000,
 });
 ```
@@ -152,12 +152,12 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Stainless();
 
-const response = await client.builds.outputs.retrieve('REPLACE_ME', 'REPLACE_ME').asResponse();
+const response = await client.builds.outputs.retrieve('bui_123', 'node').asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: output, response: raw } = await client.builds.outputs
-  .retrieve('REPLACE_ME', 'REPLACE_ME')
+  .retrieve('bui_123', 'node')
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(output.commit);
@@ -264,7 +264,7 @@ const client = new Stainless({
 });
 
 // Override per-request:
-await client.builds.outputs.retrieve('REPLACE_ME', 'REPLACE_ME', {
+await client.builds.outputs.retrieve('bui_123', 'node', {
   httpAgent: new http.Agent({ keepAlive: false }),
 });
 ```
