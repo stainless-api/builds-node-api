@@ -1,6 +1,6 @@
 # Stainless Node API Library
 
-This is a very rough SDK that Stainless uses to power its GitHub action. It is not yet intended for general use and is subject to large breaking changes.
+This is a very rough SDK that Stainless uses to power its GitHub action. It is not yet intended for general use and may be subject to large breaking changes.
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
