@@ -1,45 +1,22 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { type Agent } from './_shims/index';
-import * as qs from './internal/qs';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import {
-  APIResponse,
-  Pet,
-  PetCreateParams,
-  PetFindByStatusParams,
-  PetFindByStatusResponse,
-  PetFindByTagsParams,
-  PetFindByTagsResponse,
-  PetUpdateByIDParams,
-  PetUpdateParams,
-  PetUploadImageParams,
-  Pets,
-} from './resources/pets';
-import {
-  User,
-  UserCreateParams,
-  UserCreateWithListParams,
-  UserLoginParams,
-  UserLoginResponse,
-  UserResource,
-  UserUpdateParams,
-} from './resources/user';
-import { Store, StoreCreateOrderParams, StoreInventoryResponse } from './resources/store/store';
+import { BuildListParams, BuildListResponse, BuildResponse, Builds } from './resources/builds/builds';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['PETSTORE_API_KEY'].
+   * API key used for authentication
    */
   apiKey?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['PETSTORE_BASE_URL'].
+   * Defaults to process.env['STAINLESS_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -94,18 +71,18 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Petstore API.
+ * API Client for interfacing with the Stainless API.
  */
-export class Petstore extends Core.APIClient {
+export class Stainless extends Core.APIClient {
   apiKey: string;
 
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Petstore API.
+   * API Client for interfacing with the Stainless API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['PETSTORE_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['PETSTORE_BASE_URL'] ?? https://petstore3.swagger.io/api/v3] - Override the default base URL for the API.
+   * @param {string | undefined} [opts.apiKey=process.env['API_KEY'] ?? undefined]
+   * @param {string} [opts.baseURL=process.env['STAINLESS_BASE_URL'] ?? https://api.stainlessapi.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
    * @param {Core.Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -114,20 +91,20 @@ export class Petstore extends Core.APIClient {
    * @param {Core.DefaultQuery} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = Core.readEnv('PETSTORE_BASE_URL'),
-    apiKey = Core.readEnv('PETSTORE_API_KEY'),
+    baseURL = Core.readEnv('STAINLESS_BASE_URL'),
+    apiKey = Core.readEnv('API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.PetstoreError(
-        "The PETSTORE_API_KEY environment variable is missing or empty; either provide it, or instantiate the Petstore client with an apiKey option, like new Petstore({ apiKey: 'My API Key' }).",
+      throw new Errors.StainlessError(
+        "The API_KEY environment variable is missing or empty; either provide it, or instantiate the Stainless client with an apiKey option, like new Stainless({ apiKey: 'My API Key' }).",
       );
     }
 
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://petstore3.swagger.io/api/v3`,
+      baseURL: baseURL || `https://api.stainlessapi.com`,
     };
 
     super({
@@ -143,9 +120,7 @@ export class Petstore extends Core.APIClient {
     this.apiKey = apiKey;
   }
 
-  pets: API.Pets = new API.Pets(this);
-  store: API.Store = new API.Store(this);
-  user: API.UserResource = new API.UserResource(this);
+  builds: API.Builds = new API.Builds(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -159,17 +134,13 @@ export class Petstore extends Core.APIClient {
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
-    return { api_key: this.apiKey };
+    return { Authorization: this.apiKey };
   }
 
-  protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
-  }
-
-  static Petstore = this;
+  static Stainless = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static PetstoreError = Errors.PetstoreError;
+  static StainlessError = Errors.StainlessError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -187,48 +158,21 @@ export class Petstore extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-Petstore.Pets = Pets;
-Petstore.Store = Store;
-Petstore.UserResource = UserResource;
-export declare namespace Petstore {
+Stainless.Builds = Builds;
+export declare namespace Stainless {
   export type RequestOptions = Core.RequestOptions;
 
   export {
-    Pets as Pets,
-    type APIResponse as APIResponse,
-    type Pet as Pet,
-    type PetFindByStatusResponse as PetFindByStatusResponse,
-    type PetFindByTagsResponse as PetFindByTagsResponse,
-    type PetCreateParams as PetCreateParams,
-    type PetUpdateParams as PetUpdateParams,
-    type PetFindByStatusParams as PetFindByStatusParams,
-    type PetFindByTagsParams as PetFindByTagsParams,
-    type PetUpdateByIDParams as PetUpdateByIDParams,
-    type PetUploadImageParams as PetUploadImageParams,
+    Builds as Builds,
+    type BuildResponse as BuildResponse,
+    type BuildListResponse as BuildListResponse,
+    type BuildListParams as BuildListParams,
   };
-
-  export {
-    Store as Store,
-    type StoreInventoryResponse as StoreInventoryResponse,
-    type StoreCreateOrderParams as StoreCreateOrderParams,
-  };
-
-  export {
-    UserResource as UserResource,
-    type User as User,
-    type UserLoginResponse as UserLoginResponse,
-    type UserCreateParams as UserCreateParams,
-    type UserUpdateParams as UserUpdateParams,
-    type UserCreateWithListParams as UserCreateWithListParams,
-    type UserLoginParams as UserLoginParams,
-  };
-
-  export type Order = API.Order;
 }
 
 export { toFile, fileFromPath } from './uploads';
 export {
-  PetstoreError,
+  StainlessError,
   APIError,
   APIConnectionError,
   APIConnectionTimeoutError,
@@ -243,4 +187,4 @@ export {
   UnprocessableEntityError,
 } from './error';
 
-export default Petstore;
+export default Stainless;
