@@ -1,10 +1,6 @@
 # Stainless Node API Library
 
-[![NPM version](https://img.shields.io/npm/v/stainless.svg)](https://npmjs.org/package/stainless) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/stainless)
-
-This library provides convenient access to the Stainless REST API from server-side TypeScript or JavaScript.
-
-The REST API documentation can be found on [app.stainlessapi.com](https://app.stainlessapi.com/docs). The full API of this library can be found in [api.md](api.md).
+This is a very rough SDK that Stainless uses to power its GitHub action. It is not yet intended for general use and is subject to large breaking changes.
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
@@ -13,9 +9,6 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 ```sh
 npm install git+ssh://git@github.com:stainless-api/builds-node-api.git
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://app.stainlessapi.com/docs/guides/publish), this will become: `npm install stainless`
 
 ## Usage
 
