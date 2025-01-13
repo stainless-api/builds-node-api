@@ -9,7 +9,7 @@ const client = new Stainless({
 
 describe('resource outputs', () => {
   test('retrieve: only required params', async () => {
-    const responsePromise = client.builds.outputs.retrieve('node', { id: 'id' });
+    const responsePromise = client.builds.outputs.retrieve({ id: 'id', target: 'node' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,6 +20,6 @@ describe('resource outputs', () => {
   });
 
   test('retrieve: required and optional params', async () => {
-    const response = await client.builds.outputs.retrieve('node', { id: 'id' });
+    const response = await client.builds.outputs.retrieve({ id: 'id', target: 'node' });
   });
 });
