@@ -8,12 +8,8 @@ export class Outputs extends APIResource {
   /**
    * Get the output status and details for a specific target for a specific build
    */
-  retrieve(
-    target: 'node' | 'python' | 'go' | 'java' | 'kotlin' | 'ruby',
-    params: OutputRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<OutputRetrieveResponse> {
-    const { id } = params;
+  retrieve(params: OutputRetrieveParams, options?: RequestOptions): APIPromise<OutputRetrieveResponse> {
+    const { id, target } = params;
     return this._client.get(`/v1/builds/${id}/outputs/${target}`, options);
   }
 }
@@ -126,6 +122,11 @@ export interface OutputRetrieveParams {
    * The build ID
    */
   id: string;
+
+  /**
+   * The target to get the output for
+   */
+  target: 'node' | 'python' | 'go' | 'java' | 'kotlin' | 'ruby';
 }
 
 export declare namespace Outputs {

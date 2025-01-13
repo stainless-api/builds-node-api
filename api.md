@@ -24,4 +24,4 @@ Types:
 
 Methods:
 
-- <code title="get /v1/builds/{id}/outputs/{target}">client.builds.outputs.<a href="./src/resources/builds/outputs.ts">retrieve</a>(target, { ...params }) -> OutputRetrieveResponse</code>
+- <code title="get /v1/builds/{id}/outputs/{target}">client.builds.outputs.<a href="./src/resources/builds/outputs.ts">retrieve</a>({ ...params }) -> OutputRetrieveResponse</code>
