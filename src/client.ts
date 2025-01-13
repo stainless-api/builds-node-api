@@ -23,13 +23,7 @@ import { FinalRequestOptions, RequestOptions } from './internal/request-options'
 import { readEnv } from './internal/utils/env';
 import { logger } from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
-import {
-  BuildCreateParams,
-  BuildListParams,
-  BuildListResponse,
-  BuildResponse,
-  Builds,
-} from './resources/builds/builds';
+import { BuildListParams, BuildListResponse, BuildResponse, Builds } from './resources/builds/builds';
 
 const safeJSON = (text: string) => {
   try {
@@ -664,7 +658,6 @@ export declare namespace Stainless {
     Builds as Builds,
     type BuildResponse as BuildResponse,
     type BuildListResponse as BuildListResponse,
-    type BuildCreateParams as BuildCreateParams,
     type BuildListParams as BuildListParams,
   };
 }

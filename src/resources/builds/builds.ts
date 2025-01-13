@@ -14,21 +14,10 @@ import {
   TestBuildStep,
 } from './outputs';
 import { APIPromise } from '../../api-promise';
-import { type Uploadable, multipartFormRequestOptions } from '../../uploads';
 import { RequestOptions } from '../../internal/request-options';
 
 export class Builds extends APIResource {
   outputs: OutputsAPI.Outputs = new OutputsAPI.Outputs(this._client);
-
-  /**
-   * Create a build by uploading a spec along with some other info
-   */
-  create(body: BuildCreateParams, options?: RequestOptions): APIPromise<void> {
-    return this._client.post(
-      '/api/spec',
-      multipartFormRequestOptions({ body, ...options, headers: { Accept: '*/*', ...options?.headers } }),
-    );
-  }
 
   /**
    * Retrieve a list of builds for a project
@@ -43,43 +32,6 @@ export interface BuildResponse {
 }
 
 export type BuildListResponse = Array<BuildResponse>;
-
-export interface BuildCreateParams {
-  /**
-   * The OpenAPI spec to upload
-   */
-  oasSpec: Uploadable;
-
-  /**
-   * The name of the project to create the build in
-   */
-  project: string;
-
-  /**
-   * The name of the Stainless branch to upload the spec to
-   */
-  branch?: string;
-
-  /**
-   * The commit message to use in any resultant commits to the SDK repo
-   */
-  commitMessage?: string;
-
-  /**
-   * Whether or not to use an LLM to automatically guess config changes
-   */
-  guessConfig?: boolean;
-
-  /**
-   * The ID of the parent build
-   */
-  parentBuildId?: string;
-
-  /**
-   * The Stainless Config to upload
-   */
-  stainlessConfig?: Uploadable;
-}
 
 export interface BuildListParams {
   /**
@@ -109,7 +61,6 @@ export declare namespace Builds {
   export {
     type BuildResponse as BuildResponse,
     type BuildListResponse as BuildListResponse,
-    type BuildCreateParams as BuildCreateParams,
     type BuildListParams as BuildListParams,
   };
 
