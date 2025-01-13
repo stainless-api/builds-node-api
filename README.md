@@ -30,7 +30,7 @@ const client = new Stainless({
 });
 
 async function main() {
-  const output = await client.builds.outputs.retrieve({ id: 'bui_123', target: 'node' });
+  const output = await client.builds.outputs.retrieve('node', { id: 'bui_123' });
 
   console.log(output.commit);
 }
@@ -51,8 +51,11 @@ const client = new Stainless({
 });
 
 async function main() {
-  const params: Stainless.Builds.OutputRetrieveParams = { id: 'bui_123', target: 'node' };
-  const output: Stainless.Builds.OutputRetrieveResponse = await client.builds.outputs.retrieve(params);
+  const params: Stainless.Builds.OutputRetrieveParams = { id: 'bui_123' };
+  const output: Stainless.Builds.OutputRetrieveResponse = await client.builds.outputs.retrieve(
+    'node',
+    params,
+  );
 }
 
 main();
@@ -69,17 +72,15 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const output = await client.builds.outputs
-    .retrieve({ id: 'bui_123', target: 'node' })
-    .catch(async (err) => {
-      if (err instanceof Stainless.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
+  const output = await client.builds.outputs.retrieve('node', { id: 'bui_123' }).catch(async (err) => {
+    if (err instanceof Stainless.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 }
 
 main();
@@ -114,7 +115,7 @@ const client = new Stainless({
 });
 
 // Or, configure per-request:
-await client.builds.outputs.retrieve({ id: 'bui_123', target: 'node' }, {
+await client.builds.outputs.retrieve('node', { id: 'bui_123' }, {
   maxRetries: 5,
 });
 ```
@@ -131,7 +132,7 @@ const client = new Stainless({
 });
 
 // Override per-request:
-await client.builds.outputs.retrieve({ id: 'bui_123', target: 'node' }, {
+await client.builds.outputs.retrieve('node', { id: 'bui_123' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -152,12 +153,12 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new Stainless();
 
-const response = await client.builds.outputs.retrieve({ id: 'bui_123', target: 'node' }).asResponse();
+const response = await client.builds.outputs.retrieve('node', { id: 'bui_123' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: output, response: raw } = await client.builds.outputs
-  .retrieve({ id: 'bui_123', target: 'node' })
+  .retrieve('node', { id: 'bui_123' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(output.commit);
@@ -267,7 +268,8 @@ const client = new Stainless({
 
 // Override per-request:
 await client.builds.outputs.retrieve(
-  { id: 'bui_123', target: 'node' },
+  'node',
+  { id: 'bui_123' },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
