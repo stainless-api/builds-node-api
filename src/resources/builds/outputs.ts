@@ -32,16 +32,16 @@ export type CommitBuildStep =
   | BuildStepOutputNotStarted
   | BuildStepOutputQueued
   | BuildStepOutputInProgress
-  | CommitBuildStep.CommitBuildStepOutputCompleted;
+  | CommitBuildStep.Completed;
 
 export namespace CommitBuildStep {
-  export interface CommitBuildStepOutputCompleted {
-    completed: CommitBuildStepOutputCompleted.Completed;
+  export interface Completed {
+    completed: Completed.Completed;
 
     status: 'completed';
   }
 
-  export namespace CommitBuildStepOutputCompleted {
+  export namespace Completed {
     export interface Completed {
       commit: string;
 
@@ -61,16 +61,16 @@ export type LintBuildStep =
   | BuildStepOutputNotStarted
   | BuildStepOutputQueued
   | BuildStepOutputInProgress
-  | LintBuildStep.LintBuildStepOutputCompleted;
+  | LintBuildStep.Completed;
 
 export namespace LintBuildStep {
-  export interface LintBuildStepOutputCompleted {
-    completed: LintBuildStepOutputCompleted.Completed;
+  export interface Completed {
+    completed: Completed.Completed;
 
     status: 'completed';
   }
 
-  export namespace LintBuildStepOutputCompleted {
+  export namespace Completed {
     export interface Completed {
       conclusion:
         | 'success'
@@ -88,16 +88,16 @@ export type TestBuildStep =
   | BuildStepOutputNotStarted
   | BuildStepOutputQueued
   | BuildStepOutputInProgress
-  | TestBuildStep.TestBuildStepOutputCompleted;
+  | TestBuildStep.Completed;
 
 export namespace TestBuildStep {
-  export interface TestBuildStepOutputCompleted {
-    completed: TestBuildStepOutputCompleted.Completed;
+  export interface Completed {
+    completed: Completed.Completed;
 
     status: 'completed';
   }
 
-  export namespace TestBuildStepOutputCompleted {
+  export namespace Completed {
     export interface Completed {
       conclusion:
         | 'success'
