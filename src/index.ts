@@ -5,7 +5,13 @@ import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import { BuildListParams, BuildListResponse, BuildResponse, Builds } from './resources/builds/builds';
+import {
+  BuildCreateParams,
+  BuildListParams,
+  BuildListResponse,
+  BuildResponse,
+  Builds,
+} from './resources/builds/builds';
 
 export interface ClientOptions {
   /**
@@ -166,6 +172,7 @@ export declare namespace Stainless {
     Builds as Builds,
     type BuildResponse as BuildResponse,
     type BuildListResponse as BuildListResponse,
+    type BuildCreateParams as BuildCreateParams,
     type BuildListParams as BuildListParams,
   };
 }
