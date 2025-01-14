@@ -8,9 +8,13 @@ export class Outputs extends APIResource {
   /**
    * Get the output status and details for a specific target for a specific build
    */
-  retrieve(params: OutputRetrieveParams, options?: RequestOptions): APIPromise<OutputRetrieveResponse> {
-    const { id, target } = params;
-    return this._client.get(`/api/v1/builds/${id}/outputs/${target}`, options);
+  retrieve(
+    id: string,
+    params: OutputRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<OutputRetrieveResponse> {
+    const { target } = params;
+    return this._client.get(`/v1/builds/${id}/outputs/${target}`, options);
   }
 }
 
@@ -136,11 +140,6 @@ export interface OutputRetrieveResponse {
 }
 
 export interface OutputRetrieveParams {
-  /**
-   * The build ID
-   */
-  id: string;
-
   /**
    * The target to get the output for
    */
