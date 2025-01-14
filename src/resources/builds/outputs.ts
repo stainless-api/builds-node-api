@@ -38,26 +38,30 @@ export type CommitBuildStep =
 
 export namespace CommitBuildStep {
   export interface Completed {
-    completed: Completed.Completed;
+    completed: Completed.CommitMissingShape | Completed.CommitPresentShape;
 
     status: 'completed';
   }
 
   export namespace Completed {
-    export interface Completed {
-      commit: Completed.Commit;
-
+    export interface CommitMissingShape {
       conclusion:
-        | 'success'
-        | 'failure'
-        | 'skipped'
         | 'cancelled'
-        | 'action_required'
-        | 'neutral'
-        | 'timed_out';
+        | 'timed_out'
+        | 'fatal'
+        | 'payment_required'
+        | 'noop'
+        | 'merge_conflict'
+        | 'version_bump';
     }
 
-    export namespace Completed {
+    export interface CommitPresentShape {
+      commit: CommitPresentShape.Commit;
+
+      conclusion: 'error' | 'success' | 'warning' | 'note';
+    }
+
+    export namespace CommitPresentShape {
       export interface Commit {
         repo: Commit.Repo;
 
