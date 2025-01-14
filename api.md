@@ -8,7 +8,7 @@ Types:
 Methods:
 
 - <code title="post /api/spec">client.builds.<a href="./src/resources/builds/builds.ts">create</a>({ ...params }) -> void</code>
-- <code title="get /v1/builds">client.builds.<a href="./src/resources/builds/builds.ts">list</a>({ ...params }) -> BuildListResponse</code>
+- <code title="get /api/v1/builds">client.builds.<a href="./src/resources/builds/builds.ts">list</a>({ ...params }) -> BuildListResponse</code>
 
 ## Outputs
 
@@ -24,4 +24,4 @@ Types:
 
 Methods:
 
-- <code title="get /v1/builds/{id}/outputs/{target}">client.builds.outputs.<a href="./src/resources/builds/outputs.ts">retrieve</a>({ ...params }) -> OutputRetrieveResponse</code>
+- <code title="get /api/v1/builds/{id}/outputs/{target}">client.builds.outputs.<a href="./src/resources/builds/outputs.ts">retrieve</a>({ ...params }) -> OutputRetrieveResponse</code>
