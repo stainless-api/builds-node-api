@@ -41,7 +41,7 @@ export namespace CommitBuildStep {
 
   export namespace Completed {
     export interface Completed {
-      commit: string;
+      commit: Completed.Commit;
 
       conclusion:
         | 'success'
@@ -51,6 +51,24 @@ export namespace CommitBuildStep {
         | 'action_required'
         | 'neutral'
         | 'timed_out';
+    }
+
+    export namespace Completed {
+      export interface Commit {
+        repo: Commit.Repo;
+
+        sha: string;
+      }
+
+      export namespace Commit {
+        export interface Repo {
+          branch: string;
+
+          name: string;
+
+          owner: string;
+        }
+      }
     }
   }
 }
