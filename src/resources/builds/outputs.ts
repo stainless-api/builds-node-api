@@ -144,7 +144,7 @@ export interface OutputRetrieveParams {
   /**
    * The target to get the output for
    */
-  target: 'node' | 'python' | 'go' | 'java' | 'kotlin' | 'ruby';
+  target: 'node' | 'python' | 'go' | 'java' | 'kotlin' | 'ruby' | 'typescript';
 }
 
 export declare namespace Outputs {
