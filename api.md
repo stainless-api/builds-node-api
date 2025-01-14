@@ -7,6 +7,7 @@ Types:
 
 Methods:
 
+- <code title="post /api/spec">client.builds.<a href="./src/resources/builds/builds.ts">create</a>({ ...params }) -> void</code>
 - <code title="get /v1/builds">client.builds.<a href="./src/resources/builds/builds.ts">list</a>({ ...params }) -> BuildListResponse</code>
 
 ## Outputs
