@@ -10,7 +10,7 @@ export class Outputs extends APIResource {
    */
   retrieve(params: OutputRetrieveParams, options?: RequestOptions): APIPromise<OutputRetrieveResponse> {
     const { id, target } = params;
-    return this._client.get(`/v1/builds/${id}/outputs/${target}`, options);
+    return this._client.get(`/api/v1/builds/${id}/outputs/${target}`, options);
   }
 }
 
