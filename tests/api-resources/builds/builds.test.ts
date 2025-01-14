@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Stainless from 'stainless';
+import Stainless, { toFile } from 'stainless';
 
 const client = new Stainless({
   apiKey: 'My API Key',
@@ -8,6 +8,32 @@ const client = new Stainless({
 });
 
 describe('resource builds', () => {
+  test('create: only required params', async () => {
+    const responsePromise = client.builds.create({
+      oasSpec: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      project: 'project',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('create: required and optional params', async () => {
+    const response = await client.builds.create({
+      oasSpec: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      project: 'project',
+      branch: 'branch',
+      commitMessage: 'commitMessage',
+      guessConfig: true,
+      parentBuildId: 'parentBuildId',
+      stainlessConfig: await toFile(Buffer.from('# my file contents'), 'README.md'),
+    });
+  });
+
   test('list: only required params', async () => {
     const responsePromise = client.builds.list({ project: 'project' });
     const rawResponse = await responsePromise.asResponse();
