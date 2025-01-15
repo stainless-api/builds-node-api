@@ -48,6 +48,7 @@ describe('resource builds', () => {
   test('list: required and optional params', async () => {
     const response = await client.builds.list({
       project: 'project',
+      branch: 'branch',
       config_hash: 'config_hash',
       limit: 0,
       spec_hash: 'spec_hash',
