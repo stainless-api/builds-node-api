@@ -29,6 +29,7 @@ describe('resource builds', () => {
       branch: 'branch',
       commitMessage: 'commitMessage',
       guessConfig: true,
+      mergeBranch: 'mergeBranch',
       parentBuildId: 'parentBuildId',
       stainlessConfig: await toFile(Buffer.from('# my file contents'), 'README.md'),
     });
