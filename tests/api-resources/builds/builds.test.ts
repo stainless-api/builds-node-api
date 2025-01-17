@@ -11,7 +11,7 @@ describe('resource builds', () => {
   test('create: only required params', async () => {
     const responsePromise = client.builds.create({
       oasSpec: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      project: 'project',
+      projectName: 'projectName',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -25,7 +25,7 @@ describe('resource builds', () => {
   test('create: required and optional params', async () => {
     const response = await client.builds.create({
       oasSpec: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      project: 'project',
+      projectName: 'projectName',
       branch: 'branch',
       commitMessage: 'commitMessage',
       guessConfig: true,
