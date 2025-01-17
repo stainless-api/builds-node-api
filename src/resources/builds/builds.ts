@@ -73,7 +73,7 @@ export interface BuildCreateParams {
   guessConfig?: boolean;
 
   /**
-   * The name of the branch to to merge in
+   * The name of the branch to merge in
    */
   mergeBranch?: string;
 
