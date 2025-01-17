@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.15 (2025-01-17)
+
+Full Changelog: [v0.1.0-alpha.14...v0.1.0-alpha.15](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.14...v0.1.0-alpha.15)
+
+### Features
+
+* **api:** api update ([#51](https://github.com/stainless-api/builds-node-api/issues/51)) ([b905142](https://github.com/stainless-api/builds-node-api/commit/b9051423c1a1ab6defd5022bb774735225b59e24))
+
 ## 0.1.0-alpha.14 (2025-01-17)
 
 Full Changelog: [v0.1.0-alpha.13...v0.1.0-alpha.14](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.13...v0.1.0-alpha.14)
