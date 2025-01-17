@@ -11,7 +11,6 @@ import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
-import { isBlobLike } from './uploads';
 import { buildHeaders } from './internal/headers';
 import * as Errors from './error';
 import * as Uploads from './uploads';
@@ -78,7 +77,7 @@ export interface ClientOptions {
    * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
    * much longer than this timeout before the promise succeeds or fails.
    */
-  timeout?: number;
+  timeout?: number | undefined;
 
   /**
    * An HTTP agent used to manage HTTP(S) connections.
@@ -86,7 +85,7 @@ export interface ClientOptions {
    * If not provided, an agent will be constructed by default in the Node.js environment,
    * otherwise no agent is used.
    */
-  httpAgent?: Shims.Agent;
+  httpAgent?: Shims.Agent | undefined;
 
   /**
    * Specify a custom `fetch` function implementation.
@@ -101,7 +100,7 @@ export interface ClientOptions {
    *
    * @default 2
    */
-  maxRetries?: number;
+  maxRetries?: number | undefined;
 
   /**
    * Default headers to include with every request to the API.
@@ -109,7 +108,7 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * header to `null` in request options.
    */
-  defaultHeaders?: HeadersLike;
+  defaultHeaders?: HeadersLike | undefined;
 
   /**
    * Default query parameters to include with every request to the API.
@@ -117,7 +116,7 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * param to `undefined` in request options.
    */
-  defaultQuery?: Record<string, string | undefined>;
+  defaultQuery?: Record<string, string | undefined> | undefined;
 
   /**
    * Set the log level.
@@ -331,14 +330,8 @@ export class Stainless {
     opts?: PromiseOrValue<RequestOptions>,
   ): APIPromise<Rsp> {
     return this.request(
-      Promise.resolve(opts).then(async (opts) => {
-        const body =
-          opts && isBlobLike(opts?.body) ? new DataView(await opts.body.arrayBuffer())
-          : opts?.body instanceof DataView ? opts.body
-          : opts?.body instanceof ArrayBuffer ? new DataView(opts.body)
-          : opts && ArrayBuffer.isView(opts?.body) ? new DataView(opts.body.buffer)
-          : opts?.body;
-        return { method, path, ...opts, body };
+      Promise.resolve(opts).then((opts) => {
+        return { method, path, ...opts };
       }),
     );
   }
