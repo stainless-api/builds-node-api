@@ -1,5 +1,6 @@
 import fs from 'fs';
-import { toFile, type ResponseLike } from 'stainless/uploads';
+import type { ResponseLike } from 'stainless/internal/uploads';
+import { toFile } from 'stainless/uploads';
 
 class MyClass {
   name: string = 'foo';
@@ -8,7 +9,7 @@ class MyClass {
 function mockResponse({ url, content }: { url: string; content?: Blob }): ResponseLike {
   return {
     url,
-    blob: async () => content as any,
+    blob: async () => content || new Blob([]),
   };
 }
 
