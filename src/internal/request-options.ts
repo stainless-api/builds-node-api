@@ -2,10 +2,9 @@
 
 import { NullableHeaders } from './headers';
 
-import type { Agent } from './shims';
 import type { BodyInit } from './builtin-types';
 import { isEmptyObj, hasOwn } from './utils/values';
-import type { HTTPMethod, KeysEnum } from './types';
+import type { HTTPMethod, KeysEnum, MergedRequestInit } from './types';
 import { type HeadersLike } from './headers';
 
 export type FinalRequestOptions = RequestOptions & { method: HTTPMethod; path: string };
@@ -19,7 +18,7 @@ export type RequestOptions = {
   maxRetries?: number;
   stream?: boolean | undefined;
   timeout?: number;
-  httpAgent?: Agent;
+  fetchOptions?: MergedRequestInit;
   signal?: AbortSignal | undefined | null;
   idempotencyKey?: string;
 
@@ -39,7 +38,7 @@ const requestOptionsKeys: KeysEnum<RequestOptions> = {
   maxRetries: true,
   stream: true,
   timeout: true,
-  httpAgent: true,
+  fetchOptions: true,
   signal: true,
   idempotencyKey: true,
 
