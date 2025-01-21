@@ -27,7 +27,10 @@ export class Builds extends APIResource {
   create(body: BuildCreateParams, options?: RequestOptions): APIPromise<void> {
     return this._client.post(
       '/api/spec',
-      multipartFormRequestOptions({ body, ...options, headers: { Accept: '*/*', ...options?.headers } }),
+      multipartFormRequestOptions(
+        { body, ...options, headers: { Accept: '*/*', ...options?.headers } },
+        this._client,
+      ),
     );
   }
 
