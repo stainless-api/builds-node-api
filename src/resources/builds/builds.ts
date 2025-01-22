@@ -15,6 +15,7 @@ import {
 } from './outputs';
 import { APIPromise } from '../../api-promise';
 import { type Uploadable } from '../../uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
 
@@ -28,7 +29,7 @@ export class Builds extends APIResource {
     return this._client.post(
       '/api/spec',
       multipartFormRequestOptions(
-        { body, ...options, headers: { Accept: '*/*', ...options?.headers } },
+        { body, ...options, headers: buildHeaders([{ Accept: '*/*' }, options?.headers]) },
         this._client,
       ),
     );
