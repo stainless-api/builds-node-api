@@ -1,8 +1,8 @@
-# Stainless TypeScript API Library
+# Stainless 2 TypeScript API Library
 
 [![NPM version](https://img.shields.io/npm/v/stainless.svg)](https://npmjs.org/package/stainless) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/stainless)
 
-This library provides convenient access to the Stainless REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Stainless 2 REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [app.stainlessapi.com](https://app.stainlessapi.com/docs). The full API of this library can be found in [api.md](api.md).
 
@@ -23,9 +23,9 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Stainless from 'stainless';
+import Stainless2 from 'stainless';
 
-const client = new Stainless({
+const client = new Stainless2({
   apiKey: process.env['API_KEY'], // This is the default and can be omitted
 });
 
@@ -44,15 +44,15 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Stainless from 'stainless';
+import Stainless2 from 'stainless';
 
-const client = new Stainless({
+const client = new Stainless2({
   apiKey: process.env['API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
-  const params: Stainless.Builds.OutputRetrieveParams = { target: 'node' };
-  const output: Stainless.Builds.OutputRetrieveResponse = await client.builds.outputs.retrieve(
+  const params: Stainless2.Builds.OutputRetrieveParams = { target: 'node' };
+  const output: Stainless2.Builds.OutputRetrieveResponse = await client.builds.outputs.retrieve(
     'bui_123',
     params,
   );
@@ -73,7 +73,7 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const output = await client.builds.outputs.retrieve('bui_123', { target: 'node' }).catch(async (err) => {
-    if (err instanceof Stainless.APIError) {
+    if (err instanceof Stainless2.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
       console.log(err.headers); // {server: 'nginx', ...}
@@ -110,7 +110,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new Stainless({
+const client = new Stainless2({
   maxRetries: 0, // default is 2
 });
 
@@ -127,7 +127,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new Stainless({
+const client = new Stainless2({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -151,7 +151,7 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 
 <!-- prettier-ignore -->
 ```ts
-const client = new Stainless();
+const client = new Stainless2();
 
 const response = await client.builds.outputs.retrieve('bui_123', { target: 'node' }).asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -225,7 +225,7 @@ Or pass it to the client:
 ```ts
 import fetch from 'my-fetch';
 
-const client = new Stainless({ fetch });
+const client = new Stainless2({ fetch });
 ```
 
 ### Logging and middleware
@@ -235,9 +235,9 @@ which can be used to inspect or alter the `Request` or `Response` before/after e
 
 ```ts
 import { fetch } from 'undici'; // as one example
-import Stainless from 'stainless';
+import Stainless2 from 'stainless';
 
-const client = new Stainless({
+const client = new Stainless2({
   fetch: async (url: RequestInfo, init?: RequestInit): Promise<Response> => {
     console.log('About to make a request', url, init);
     const response = await fetch(url, init);
@@ -247,7 +247,7 @@ const client = new Stainless({
 });
 ```
 
-Note that if given a `STAINLESS_LOG=debug` environment variable, this library will log all requests and responses automatically.
+Note that if given a `STAINLESS_2_LOG=debug` environment variable, this library will log all requests and responses automatically.
 This is intended for debugging purposes only and may change in the future without notice.
 
 ### Fetch options
@@ -255,9 +255,9 @@ This is intended for debugging purposes only and may change in the future withou
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Stainless from 'stainless';
+import Stainless2 from 'stainless';
 
-const client = new Stainless({
+const client = new Stainless2({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -272,11 +272,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Stainless from 'stainless';
+import Stainless2 from 'stainless';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new Stainless({
+const client = new Stainless2({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -286,9 +286,9 @@ const client = new Stainless({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Stainless from 'stainless';
+import Stainless2 from 'stainless';
 
-const client = new Stainless({
+const client = new Stainless2({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -298,10 +298,10 @@ const client = new Stainless({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Stainless from 'npm:stainless';
+import Stainless2 from 'npm:stainless';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new Stainless({
+const client = new Stainless2({
   fetchOptions: {
     client: httpClient,
   },

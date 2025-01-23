@@ -1,7 +1,7 @@
 import { type RequestOptions } from './request-options';
 import type { FilePropertyBag, Fetch } from './builtin-types';
 import { isFsReadStreamLike, type FsReadStreamLike } from './shims';
-import type { Stainless } from '../client';
+import type { Stainless2 } from '../client';
 import './polyfill/file.node.js';
 
 type BlobLikePart = string | ArrayBuffer | ArrayBufferView | BlobLike | DataView;
@@ -206,7 +206,7 @@ const isAsyncIterableIterator = (value: any): value is AsyncIterableIterator<unk
  */
 export const maybeMultipartFormRequestOptions = async (
   opts: RequestOptions,
-  fetch: Stainless | Fetch,
+  fetch: Stainless2 | Fetch,
 ): Promise<RequestOptions> => {
   if (!hasUploadableValue(opts.body)) return opts;
 
@@ -217,7 +217,7 @@ type MultipartFormRequestOptions = Omit<RequestOptions, 'body'> & { body: unknow
 
 export const multipartFormRequestOptions = async (
   opts: MultipartFormRequestOptions,
-  fetch: Stainless | Fetch,
+  fetch: Stainless2 | Fetch,
 ): Promise<RequestOptions> => {
   return { ...opts, body: await createForm(opts.body, fetch) };
 };
@@ -230,7 +230,7 @@ const supportsFormDataMap = new WeakMap<Fetch, Promise<boolean>>();
  * This function detects if the fetch function provided supports the global FormData object to avoid
  * confusing error messages later on.
  */
-function supportsFormData(fetchObject: Stainless | Fetch): Promise<boolean> {
+function supportsFormData(fetchObject: Stainless2 | Fetch): Promise<boolean> {
   const fetch: Fetch = typeof fetchObject === 'function' ? fetchObject : (fetchObject as any).fetch;
   const cached = supportsFormDataMap.get(fetch);
   if (cached) return cached;
@@ -256,7 +256,7 @@ function supportsFormData(fetchObject: Stainless | Fetch): Promise<boolean> {
 
 export const createForm = async <T = Record<string, unknown>>(
   body: T | undefined,
-  fetch: Stainless | Fetch,
+  fetch: Stainless2 | Fetch,
 ): Promise<FormData> => {
   if (!(await supportsFormData(fetch))) {
     throw new TypeError(
