@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.0-alpha.16 (2025-01-22)
+
+Full Changelog: [v0.1.0-alpha.15...v0.1.0-alpha.16](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.15...v0.1.0-alpha.16)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** document proxy use + clean up old code ([#57](https://github.com/stainless-api/builds-node-api/issues/57))
+
+### Bug Fixes
+
+* correctly send default header values ([#58](https://github.com/stainless-api/builds-node-api/issues/58)) ([6818d5a](https://github.com/stainless-api/builds-node-api/commit/6818d5a92cfa3edeeb88797b7f5e567cee31dcc4))
+
+
+### Chores
+
+* **client:** document proxy use + clean up old code ([#57](https://github.com/stainless-api/builds-node-api/issues/57)) ([18f95e7](https://github.com/stainless-api/builds-node-api/commit/18f95e7c13d5920a88aee790477824c66989cc05))
+* **client:** improve node-fetch file upload errors ([#56](https://github.com/stainless-api/builds-node-api/issues/56)) ([1f48b98](https://github.com/stainless-api/builds-node-api/commit/1f48b98aaf358183b517d07da5fd44909119f1c1))
+* **internal:** codegen related update ([#54](https://github.com/stainless-api/builds-node-api/issues/54)) ([a0504f2](https://github.com/stainless-api/builds-node-api/commit/a0504f2230fb783e10b1443645f5d26fdde13987))
+* **internal:** minor restructuring ([#59](https://github.com/stainless-api/builds-node-api/issues/59)) ([a03e6ca](https://github.com/stainless-api/builds-node-api/commit/a03e6ca28992147f6aac63493ec28f3f99ac6e33))
+
 ## 0.1.0-alpha.15 (2025-01-17)
 
 Full Changelog: [v0.1.0-alpha.14...v0.1.0-alpha.15](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.14...v0.1.0-alpha.15)

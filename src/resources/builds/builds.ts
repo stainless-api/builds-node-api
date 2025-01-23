@@ -14,8 +14,10 @@ import {
   TestBuildStep,
 } from './outputs';
 import { APIPromise } from '../../api-promise';
-import { type Uploadable, multipartFormRequestOptions } from '../../uploads';
+import { type Uploadable } from '../../uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { multipartFormRequestOptions } from '../../internal/uploads';
 
 export class Builds extends APIResource {
   outputs: OutputsAPI.Outputs = new OutputsAPI.Outputs(this._client);
@@ -26,7 +28,10 @@ export class Builds extends APIResource {
   create(body: BuildCreateParams, options?: RequestOptions): APIPromise<void> {
     return this._client.post(
       '/api/spec',
-      multipartFormRequestOptions({ body, ...options, headers: { Accept: '*/*', ...options?.headers } }),
+      multipartFormRequestOptions(
+        { body, ...options, headers: buildHeaders([{ Accept: '*/*' }, options?.headers]) },
+        this._client,
+      ),
     );
   }
 

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import type { RequestInit, RequestInfo, BodyInit } from './internal/builtin-types';
-import type { HTTPMethod, PromiseOrValue } from './internal/types';
+import type { HTTPMethod, PromiseOrValue, MergedRequestInit } from './internal/types';
 import { uuid4 } from './internal/utils/uuid';
 import { validatePositiveInteger, isAbsoluteURL } from './internal/utils/values';
 import { sleep } from './internal/utils/sleep';
@@ -11,14 +11,12 @@ import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
-import { isBlobLike } from './uploads';
-import { buildHeaders } from './internal/headers';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
 import { APIPromise } from './api-promise';
 import { type Fetch } from './internal/builtin-types';
-import { HeadersLike, NullableHeaders } from './internal/headers';
+import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { readEnv } from './internal/utils/env';
 import { logger } from './internal/utils/log';
@@ -78,15 +76,12 @@ export interface ClientOptions {
    * Note that request timeouts are retried by default, so in a worst-case scenario you may wait
    * much longer than this timeout before the promise succeeds or fails.
    */
-  timeout?: number;
-
+  timeout?: number | undefined;
   /**
-   * An HTTP agent used to manage HTTP(S) connections.
-   *
-   * If not provided, an agent will be constructed by default in the Node.js environment,
-   * otherwise no agent is used.
+   * Additional `RequestInit` options to be passed to `fetch` calls.
+   * Properties will be overridden by per-request `fetchOptions`.
    */
-  httpAgent?: Shims.Agent;
+  fetchOptions?: MergedRequestInit | undefined;
 
   /**
    * Specify a custom `fetch` function implementation.
@@ -101,7 +96,7 @@ export interface ClientOptions {
    *
    * @default 2
    */
-  maxRetries?: number;
+  maxRetries?: number | undefined;
 
   /**
    * Default headers to include with every request to the API.
@@ -109,7 +104,7 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * header to `null` in request options.
    */
-  defaultHeaders?: HeadersLike;
+  defaultHeaders?: HeadersLike | undefined;
 
   /**
    * Default query parameters to include with every request to the API.
@@ -117,7 +112,7 @@ export interface ClientOptions {
    * These can be removed in individual requests by explicitly setting the
    * param to `undefined` in request options.
    */
-  defaultQuery?: Record<string, string | undefined>;
+  defaultQuery?: Record<string, string | undefined> | undefined;
 
   /**
    * Set the log level.
@@ -147,7 +142,7 @@ export class Stainless {
   timeout: number;
   logger: Logger | undefined;
   logLevel: LogLevel | undefined;
-  httpAgent: Shims.Agent | undefined;
+  fetchOptions: MergedRequestInit | undefined;
 
   private fetch: Fetch;
   #encoder: Opts.RequestEncoder;
@@ -160,7 +155,7 @@ export class Stainless {
    * @param {string | undefined} [opts.apiKey=process.env['API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['STAINLESS_BASE_URL'] ?? https://api.stainlessapi.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
-   * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
+   * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
    * @param {number} [opts.maxRetries=2] - The maximum number of times the client will retry a request.
    * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request to the API.
@@ -194,7 +189,7 @@ export class Stainless {
         this.logLevel = envLevel;
       }
     }
-    this.httpAgent = options.httpAgent;
+    this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
@@ -331,14 +326,8 @@ export class Stainless {
     opts?: PromiseOrValue<RequestOptions>,
   ): APIPromise<Rsp> {
     return this.request(
-      Promise.resolve(opts).then(async (opts) => {
-        const body =
-          opts && isBlobLike(opts?.body) ? new DataView(await opts.body.arrayBuffer())
-          : opts?.body instanceof DataView ? opts.body
-          : opts?.body instanceof ArrayBuffer ? new DataView(opts.body)
-          : opts && ArrayBuffer.isView(opts?.body) ? new DataView(opts.body.buffer)
-          : opts?.body;
-        return { method, path, ...opts, body };
+      Promise.resolve(opts).then((opts) => {
+        return { method, path, ...opts };
       }),
     );
   }
@@ -533,30 +522,18 @@ export class Stainless {
     const url = this.buildURL(path!, query as Record<string, unknown>);
     if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
     const timeout = options.timeout ?? this.timeout;
-    const httpAgent = options.httpAgent ?? this.httpAgent;
-    const minAgentTimeout = timeout + 1000;
-    if (
-      typeof (httpAgent as any)?.options?.timeout === 'number' &&
-      minAgentTimeout > ((httpAgent as any).options.timeout ?? 0)
-    ) {
-      // Allow any given request to bump our agent active socket timeout.
-      // This may seem strange, but leaking active sockets should be rare and not particularly problematic,
-      // and without mutating agent we would need to create more of them.
-      // This tradeoff optimizes for performance.
-      (httpAgent as any).options.timeout = minAgentTimeout;
-    }
-
     const { bodyHeaders, body } = this.buildBody({ options });
     const reqHeaders = this.buildHeaders({ options, method, bodyHeaders, retryCount });
 
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(httpAgent && { agent: httpAgent }),
       ...(options.signal && { signal: options.signal }),
       ...((globalThis as any).ReadableStream &&
         body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
       ...(body && { body }),
+      ...((this.fetchOptions as any) ?? {}),
+      ...((options.fetchOptions as any) ?? {}),
     };
 
     return { req, url, timeout };
