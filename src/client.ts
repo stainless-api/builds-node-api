@@ -65,7 +65,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['STAINLESS_BASE_URL'].
+   * Defaults to process.env['STAINLESS_2_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -117,7 +117,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['STAINLESS_LOG'].
+   * Defaults to process.env['STAINLESS_2_LOG'].
    */
   logLevel?: LogLevel | undefined | null;
 
@@ -132,9 +132,9 @@ export interface ClientOptions {
 type FinalizedRequestInit = RequestInit & { headers: Headers };
 
 /**
- * API Client for interfacing with the Stainless API.
+ * API Client for interfacing with the Stainless 2 API.
  */
-export class Stainless {
+export class Stainless2 {
   apiKey: string;
 
   baseURL: string;
@@ -150,10 +150,10 @@ export class Stainless {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Stainless API.
+   * API Client for interfacing with the Stainless 2 API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['STAINLESS_BASE_URL'] ?? https://api.stainlessapi.com] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['STAINLESS_2_BASE_URL'] ?? https://api.stainlessapi.com] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -162,13 +162,13 @@ export class Stainless {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('STAINLESS_BASE_URL'),
+    baseURL = readEnv('STAINLESS_2_BASE_URL'),
     apiKey = readEnv('API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
-      throw new Errors.StainlessError(
-        "The API_KEY environment variable is missing or empty; either provide it, or instantiate the Stainless client with an apiKey option, like new Stainless({ apiKey: 'My API Key' }).",
+      throw new Errors.Stainless2Error(
+        "The API_KEY environment variable is missing or empty; either provide it, or instantiate the Stainless2 client with an apiKey option, like new Stainless2({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -179,12 +179,12 @@ export class Stainless {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? Stainless.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? Stainless2.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     if (options.logLevel != null) {
       this.logLevel = options.logLevel;
     } else {
-      const envLevel = readEnv('STAINLESS_LOG');
+      const envLevel = readEnv('STAINLESS_2_LOG');
       if (isLogLevel(envLevel)) {
         this.logLevel = envLevel;
       }
@@ -224,7 +224,7 @@ export class Stainless {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.StainlessError(
+        throw new Errors.Stainless2Error(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -612,10 +612,10 @@ export class Stainless {
     }
   }
 
-  static Stainless = this;
+  static Stainless2 = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static StainlessError = Errors.StainlessError;
+  static Stainless2Error = Errors.Stainless2Error;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -633,8 +633,8 @@ export class Stainless {
 
   builds: API.Builds = new API.Builds(this);
 }
-Stainless.Builds = Builds;
-export declare namespace Stainless {
+Stainless2.Builds = Builds;
+export declare namespace Stainless2 {
   export type RequestOptions = Opts.RequestOptions;
 
   export {

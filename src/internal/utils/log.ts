@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import type { LogLevel, Logger } from '../../client';
-import { type Stainless } from '../../client';
+import { type Stainless2 } from '../../client';
 
 const levelNumbers = {
   off: 0,
@@ -26,7 +26,7 @@ let lastLogger: { deref(): Logger } | undefined;
 let lastLevel: LogLevel | undefined;
 let lastLevelLogger: Logger;
 
-export function logger(client: Stainless): Logger {
+export function logger(client: Stainless2): Logger {
   let { logger, logLevel: clientLevel } = client;
   if (lastLevel === clientLevel && (logger === lastLogger || logger === lastLogger?.deref())) {
     return lastLevelLogger;
