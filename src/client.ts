@@ -524,11 +524,12 @@ export class Stainless {
     options: FinalRequestOptions,
     { retryCount = 0 }: { retryCount?: number } = {},
   ): { req: FinalizedRequestInit; url: string; timeout: number } {
+    options = { ...options };
     const { method, path, query } = options;
 
     const url = this.buildURL(path!, query as Record<string, unknown>);
     if ('timeout' in options) validatePositiveInteger('timeout', options.timeout);
-    const timeout = options.timeout ?? this.timeout;
+    options.timeout = options.timeout ?? this.timeout;
     const { bodyHeaders, body } = this.buildBody({ options });
     const reqHeaders = this.buildHeaders({ options, method, bodyHeaders, retryCount });
 
@@ -543,7 +544,7 @@ export class Stainless {
       ...((options.fetchOptions as any) ?? {}),
     };
 
-    return { req, url, timeout };
+    return { req, url, timeout: options.timeout };
   }
 
   private buildHeaders({
@@ -569,6 +570,7 @@ export class Stainless {
         Accept: 'application/json',
         'User-Agent': this.getUserAgent(),
         'X-Stainless-Retry-Count': String(retryCount),
+        ...(options.timeout ? { 'X-Stainless-Timeout': String(options.timeout) } : {}),
         ...getPlatformHeaders(),
       },
       this.authHeaders(options),
