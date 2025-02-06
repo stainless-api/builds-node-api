@@ -3,6 +3,7 @@
 import { APIResource } from '../../resource';
 import { APIPromise } from '../../api-promise';
 import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Outputs extends APIResource {
   /**
@@ -14,7 +15,7 @@ export class Outputs extends APIResource {
     options?: RequestOptions,
   ): APIPromise<OutputRetrieveResponse> {
     const { target } = params;
-    return this._client.get(`/v1/builds/${id}/outputs/${target}`, options);
+    return this._client.get(path`/v1/builds/${id}/outputs/${target}`, options);
   }
 }
 
