@@ -63,6 +63,41 @@ main();
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
 
+## File uploads
+
+Request parameters that correspond to file uploads can be passed in many different forms:
+
+- `File` (or an object with the same structure)
+- a `fetch` `Response` (or an object with the same structure)
+- an `fs.ReadStream`
+- the return value of our `toFile` helper
+
+```ts
+import fs from 'fs';
+import Stainless, { toFile } from 'stainless';
+
+const client = new Stainless();
+
+// If you have access to Node `fs` we recommend using `fs.createReadStream()`:
+await client.builds.create({ oasSpec: fs.createReadStream('/path/to/file'), projectName: 'projectName' });
+
+// Or if you have the web `File` API you can pass a `File` instance:
+await client.builds.create({ oasSpec: new File(['my bytes'], 'file'), projectName: 'projectName' });
+
+// You can also pass a `fetch` `Response`:
+await client.builds.create({ oasSpec: await fetch('https://somesite/file'), projectName: 'projectName' });
+
+// Finally, if none of the above are convenient, you can use our `toFile` helper:
+await client.builds.create({
+  oasSpec: await toFile(Buffer.from('my bytes'), 'file'),
+  projectName: 'projectName',
+});
+await client.builds.create({
+  oasSpec: await toFile(new Uint8Array([0, 1, 2]), 'file'),
+  projectName: 'projectName',
+});
+```
+
 ## Handling errors
 
 When the library is unable to connect to the API,
