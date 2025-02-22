@@ -12,7 +12,7 @@ import { type ReadableStream } from './shim-types';
 
 export function getDefaultFetch(): Fetch {
   if (typeof fetch !== 'undefined') {
-    return fetch;
+    return fetch as any;
   }
 
   throw new Error(
@@ -97,7 +97,7 @@ export function ReadableStreamFrom<T>(iterable: Iterable<T> | AsyncIterable<T>):
 
   return makeReadableStream({
     start() {},
-    async pull(controller) {
+    async pull(controller: any) {
       const { done, value } = await iter.next();
       if (done) {
         controller.close();
@@ -142,4 +142,22 @@ export function ReadableStreamToAsyncIterable<T>(stream: any): AsyncIterableIter
       return this;
     },
   };
+}
+
+/**
+ * Cancels a ReadableStream we don't need to consume.
+ * See https://undici.nodejs.org/#/?id=garbage-collection
+ */
+export async function CancelReadableStream(stream: any): Promise<void> {
+  if (stream === null || typeof stream !== 'object') return;
+
+  if (stream[Symbol.asyncIterator]) {
+    await stream[Symbol.asyncIterator]().return?.();
+    return;
+  }
+
+  const reader = stream.getReader();
+  const cancelPromise = reader.cancel();
+  reader.releaseLock();
+  await cancelPromise;
 }

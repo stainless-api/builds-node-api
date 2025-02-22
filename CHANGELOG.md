@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.1.0-alpha.18 (2025-02-22)
+
+Full Changelog: [v0.1.0-alpha.17...v0.1.0-alpha.18](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.17...v0.1.0-alpha.18)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** uri encode path parameters ([#72](https://github.com/stainless-api/builds-node-api/issues/72))
+
+### Features
+
+* **client:** improve logging ([#79](https://github.com/stainless-api/builds-node-api/issues/79)) ([344d664](https://github.com/stainless-api/builds-node-api/commit/344d6640e00952b1eefd06c092731923c4c02d1e))
+* **client:** send `X-Stainless-Timeout` header ([#71](https://github.com/stainless-api/builds-node-api/issues/71)) ([861184e](https://github.com/stainless-api/builds-node-api/commit/861184e16b2db20c4650890859f3ff5f104200c6))
+
+
+### Bug Fixes
+
+* **client:** fix export map for index exports, accept BunFile ([#76](https://github.com/stainless-api/builds-node-api/issues/76)) ([3c86845](https://github.com/stainless-api/builds-node-api/commit/3c868457d188504afef265ed7b20b0712c3095a1))
+* **client:** uri encode path parameters ([#72](https://github.com/stainless-api/builds-node-api/issues/72)) ([161de71](https://github.com/stainless-api/builds-node-api/commit/161de7140299d39c751cb1d18628becefc8f98bd))
+* **internal:** return in castToError instead of throwing ([#81](https://github.com/stainless-api/builds-node-api/issues/81)) ([9e2c68d](https://github.com/stainless-api/builds-node-api/commit/9e2c68df46639d5b9d2028f9c30c65a914969428))
+
+
+### Chores
+
+* **client:** detect node and deno timeout errors ([#69](https://github.com/stainless-api/builds-node-api/issues/69)) ([b61f88b](https://github.com/stainless-api/builds-node-api/commit/b61f88bef6824e6aaa95dd2e4308debc3506e11d))
+* **client:** handle expo fetch abort errors ([#68](https://github.com/stainless-api/builds-node-api/issues/68)) ([ab3a65b](https://github.com/stainless-api/builds-node-api/commit/ab3a65b9ef6bc12abc13f9dd38b18bf21ddcdd56))
+* **internal:** add explicit export `type` modifier ([#67](https://github.com/stainless-api/builds-node-api/issues/67)) ([15888af](https://github.com/stainless-api/builds-node-api/commit/15888afda1e5b9c04fe33d72efe158d4fe8fb048))
+* **internal:** codegen related update ([#74](https://github.com/stainless-api/builds-node-api/issues/74)) ([aa8d0fe](https://github.com/stainless-api/builds-node-api/commit/aa8d0feee87946224bb27514698b61f049646b9f))
+* **internal:** codegen related update ([#78](https://github.com/stainless-api/builds-node-api/issues/78)) ([843d32f](https://github.com/stainless-api/builds-node-api/commit/843d32f1bc9be52a51ec9e4c515ba140426ca2a2))
+* **internal:** fix devcontainers setup ([#80](https://github.com/stainless-api/builds-node-api/issues/80)) ([5b73626](https://github.com/stainless-api/builds-node-api/commit/5b736268ae733698616daa2e2808a9d360936acb))
+* **internal:** fix tests not always being type checked ([#77](https://github.com/stainless-api/builds-node-api/issues/77)) ([bdf4826](https://github.com/stainless-api/builds-node-api/commit/bdf4826ef152bbfe42f5bea82981d2ab8896ee52))
+* **internal:** remove unnecessary todo ([#82](https://github.com/stainless-api/builds-node-api/issues/82)) ([096c6fe](https://github.com/stainless-api/builds-node-api/commit/096c6fe767f28f483a4e30a855ef274304c9baef))
+* **internal:** remove unused `isRequestOptions()` function ([#70](https://github.com/stainless-api/builds-node-api/issues/70)) ([ea62ef5](https://github.com/stainless-api/builds-node-api/commit/ea62ef59ca827dfafd44be6a83e1a07c9be0435c))
+* **internal:** update eslint config ([#75](https://github.com/stainless-api/builds-node-api/issues/75)) ([957a48e](https://github.com/stainless-api/builds-node-api/commit/957a48e0d89feeacd107bf4a90b26c863232ea42))
+* **types:** remove type-level dependency on some platform specifics ([#65](https://github.com/stainless-api/builds-node-api/issues/65)) ([7da0b05](https://github.com/stainless-api/builds-node-api/commit/7da0b055d754a96c886dd5362cfacfb74848282c))
+
 ## 0.1.0-alpha.17 (2025-01-23)
 
 Full Changelog: [v0.1.0-alpha.16...v0.1.0-alpha.17](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.16...v0.1.0-alpha.17)
