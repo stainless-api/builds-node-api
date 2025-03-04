@@ -1,6 +1,7 @@
 import fs from 'fs';
 import type { ResponseLike } from 'stainless/internal/to-file';
 import { toFile } from 'stainless/uploads';
+import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
