@@ -3,6 +3,7 @@
 import { APIResource } from '../../resource';
 import { APIPromise } from '../../api-promise';
 import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Outputs extends APIResource {
   /**
@@ -14,7 +15,7 @@ export class Outputs extends APIResource {
     options?: RequestOptions,
   ): APIPromise<OutputRetrieveResponse> {
     const { target } = params;
-    return this._client.get(`/v1/builds/${id}/outputs/${target}`, options);
+    return this._client.get(path`/v1/builds/${id}/outputs/${target}`, options);
   }
 }
 
@@ -38,23 +39,12 @@ export type CommitBuildStep =
 
 export namespace CommitBuildStep {
   export interface Completed {
-    completed: Completed.CommitMissingShape | Completed.CommitPresentShape;
+    completed: Completed.CommitPresentShape | Completed.MergeConflictShape | Completed.OtherConclusionShape;
 
     status: 'completed';
   }
 
   export namespace Completed {
-    export interface CommitMissingShape {
-      conclusion:
-        | 'cancelled'
-        | 'timed_out'
-        | 'fatal'
-        | 'payment_required'
-        | 'noop'
-        | 'merge_conflict'
-        | 'version_bump';
-    }
-
     export interface CommitPresentShape {
       commit: CommitPresentShape.Commit;
 
@@ -77,6 +67,32 @@ export namespace CommitBuildStep {
           owner: string;
         }
       }
+    }
+
+    export interface MergeConflictShape {
+      conclusion: 'merge_conflict' | 'upstream_merge_conflict';
+
+      merge_conflict_pr: MergeConflictShape.MergeConflictPr;
+    }
+
+    export namespace MergeConflictShape {
+      export interface MergeConflictPr {
+        number: number;
+
+        repo: MergeConflictPr.Repo;
+      }
+
+      export namespace MergeConflictPr {
+        export interface Repo {
+          name: string;
+
+          owner: string;
+        }
+      }
+    }
+
+    export interface OtherConclusionShape {
+      conclusion: 'cancelled' | 'timed_out' | 'fatal' | 'payment_required' | 'noop' | 'version_bump';
     }
   }
 }
