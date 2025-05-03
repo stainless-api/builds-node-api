@@ -6,7 +6,7 @@
     "rootDir": "./dist/src",
     "paths": {
       "stainless/*": ["dist/src/*"],
-      "stainless": ["dist/src/index.ts"],
+      "stainless": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,
