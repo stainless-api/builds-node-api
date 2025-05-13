@@ -1,5 +1,5 @@
 import { multipartFormRequestOptions, createForm } from 'stainless/internal/uploads';
-import { toFile } from 'stainless/uploads';
+import { toFile } from 'stainless/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

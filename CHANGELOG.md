@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.1.0-alpha.19 (2025-05-13)
+
+Full Changelog: [v0.1.0-alpha.18...v0.1.0-alpha.19](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.18...v0.1.0-alpha.19)
+
+### Features
+
+* **client:** add withOptions helper ([55d1f93](https://github.com/stainless-api/builds-node-api/commit/55d1f9391a388db243b24241ab4caafee8a3eec7))
+
+
+### Bug Fixes
+
+* **api:** improve type resolution when importing as a package ([#106](https://github.com/stainless-api/builds-node-api/issues/106)) ([1c08b28](https://github.com/stainless-api/builds-node-api/commit/1c08b28b534391c7bd5e9d845f31f670c70b0fc4))
+* **client:** always overwrite when merging headers ([e4b5cec](https://github.com/stainless-api/builds-node-api/commit/e4b5cec96d57c3c911df289ff6a5029bae7a279f))
+* **client:** send `X-Stainless-Timeout` in seconds ([#104](https://github.com/stainless-api/builds-node-api/issues/104)) ([cb150ed](https://github.com/stainless-api/builds-node-api/commit/cb150edfab9daeb369dbe9de0d4e68ae79e71b03))
+* **client:** send all configured auth headers ([#108](https://github.com/stainless-api/builds-node-api/issues/108)) ([5e49ef8](https://github.com/stainless-api/builds-node-api/commit/5e49ef8a6f76d97b03d7fd2f8a1e7255fb22f89d))
+* **internal:** fix file uploads in node 18 jest ([f302f19](https://github.com/stainless-api/builds-node-api/commit/f302f1916a5980a7b7f1e2849ba86772bfd9c3d1))
+* **mcp:** remove unused tools.ts ([#107](https://github.com/stainless-api/builds-node-api/issues/107)) ([dd850ba](https://github.com/stainless-api/builds-node-api/commit/dd850ba4b63fa1ad86c06d8e7a03d0327a695d23))
+
+
+### Chores
+
+* add hash of OpenAPI spec/config inputs to .stats.yml ([58857c7](https://github.com/stainless-api/builds-node-api/commit/58857c782d1db0e4e74e2aef34693c38e32c6e19))
+* **ci:** add timeout thresholds for CI jobs ([3dcdc68](https://github.com/stainless-api/builds-node-api/commit/3dcdc6878176fe1a8b24853907f2b0303ccfa8ad))
+* **ci:** only use depot for staging repos ([748b336](https://github.com/stainless-api/builds-node-api/commit/748b336e9f60c8dc82c9b95637044f081a97b7a8))
+* **client:** drop support for EOL node versions ([4e66fce](https://github.com/stainless-api/builds-node-api/commit/4e66fce96130c8510e6c7ff3dcdc4268b196ca61))
+* **client:** minor internal fixes ([c891000](https://github.com/stainless-api/builds-node-api/commit/c8910005be2e8a3b894b8582a9ddacd2480fe1fa))
+* **client:** move misc public files to new `core/` directory, deprecate old paths ([#103](https://github.com/stainless-api/builds-node-api/issues/103)) ([4c2865b](https://github.com/stainless-api/builds-node-api/commit/4c2865bb2bf8274adeea2154fca53df79ae8f995))
+* **internal:** add aliases for Record and Array ([#105](https://github.com/stainless-api/builds-node-api/issues/105)) ([f36481f](https://github.com/stainless-api/builds-node-api/commit/f36481f56128473ab5dbc454ac16261d7ea0b575))
+* **internal:** codegen related update ([f4d6644](https://github.com/stainless-api/builds-node-api/commit/f4d6644c95aa3b652c445a9b326938926a831789))
+* **internal:** codegen related update ([b56b85d](https://github.com/stainless-api/builds-node-api/commit/b56b85d5c5207a7c68bb435668e2542203675885))
+* **internal:** improve node 18 shims ([48b390e](https://github.com/stainless-api/builds-node-api/commit/48b390ead1716cda31184ee904b496e28a05db42))
+* **internal:** reduce CI branch coverage ([7914c63](https://github.com/stainless-api/builds-node-api/commit/7914c6361c7d408568972f3fbcc6e4e9a2e68219))
+* **internal:** refactor utils ([aa0e8a1](https://github.com/stainless-api/builds-node-api/commit/aa0e8a18133781ffaa6edc98a1d39a9ccd4e6e6a))
+* **internal:** share typescript helpers ([f54f0a0](https://github.com/stainless-api/builds-node-api/commit/f54f0a0a2cbc303b1fbbecbe7a14823e9ec8c8ae))
+* **internal:** upload builds and expand CI branch coverage ([d38a26d](https://github.com/stainless-api/builds-node-api/commit/d38a26dc33aeaab25a60592af5384da1c26af5c3))
+* **package:** remove engines ([ecf50ef](https://github.com/stainless-api/builds-node-api/commit/ecf50ef635b909845c7ab5e33c3ef4b433de572e))
+* **perf:** faster base64 decoding ([48a0980](https://github.com/stainless-api/builds-node-api/commit/48a09805e4c5fd6cac5d1b119083c21a47684ad3))
+
+
+### Documentation
+
+* **readme:** fix typo ([6fd06d4](https://github.com/stainless-api/builds-node-api/commit/6fd06d40ea59a5cedb749a3f99bf6120abaeee13))
+
 ## 0.1.0-alpha.18 (2025-03-20)
 
 Full Changelog: [v0.1.0-alpha.17...v0.1.0-alpha.18](https://github.com/stainless-api/builds-node-api/compare/v0.1.0-alpha.17...v0.1.0-alpha.18)
